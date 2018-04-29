@@ -27,6 +27,12 @@ export default class ComposedModal extends Component {
     this.props.onKeyDown(evt);
   };
 
+  handleClick = evt => {
+    if (this.innerModal && !this.innerModal.contains(evt.target)) {
+      this.props.onRequestClose();
+    }
+  };
+
   componentDidMount() {
     if (this.modal) {
       this.modal.focus();
@@ -77,6 +83,7 @@ export default class ComposedModal extends Component {
         role="presentation"
         ref={modal => (this.modal = modal)}
         onKeyDown={this.handleKeyDown}
+        onClick={this.handleClick}
         className={modalClass}
         {...other}>
         <div className={containerClass}>{childrenWithProps}</div>
