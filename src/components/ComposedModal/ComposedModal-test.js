@@ -1,6 +1,31 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import { ModalHeader, ModalBody, ModalFooter } from '../ComposedModal';
+import { shallow, mount } from 'enzyme';
+import {
+  ComposedModal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+} from '../ComposedModal';
+
+describe('ComposedModal', () => {
+  describe('events', () => {
+    it('should stay open when "inner modal" is clicked', () => {
+      const wrapper = mount(<ComposedModal />);
+      const div = wrapper.find('.bx--modal-container');
+      wrapper.setState({ open: true });
+      div.simulate('click');
+      expect(wrapper.state('open')).toEqual(true);
+    });
+
+    it('should close when "outer modal" is clicked...not "inner modal"', () => {
+      const wrapper = mount(<ComposedModal />);
+      const div = wrapper.find('.bx--modal');
+      wrapper.setState({ open: true });
+      div.simulate('click');
+      expect(wrapper.state('open')).toEqual(false);
+    });
+  });
+});
 
 describe('<ModalHeader />', () => {
   describe('Renders as expected', () => {

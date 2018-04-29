@@ -29,7 +29,7 @@ export default class ComposedModal extends Component {
 
   handleClick = evt => {
     if (this.innerModal && !this.innerModal.contains(evt.target)) {
-      this.props.onRequestClose();
+      this.closeModal();
     }
   };
 
@@ -86,7 +86,13 @@ export default class ComposedModal extends Component {
         onClick={this.handleClick}
         className={modalClass}
         {...other}>
-        <div className={containerClass}>{childrenWithProps}</div>
+        <div
+          ref={modal => {
+            this.innerModal = modal;
+          }}
+          className={containerClass}>
+          {childrenWithProps}
+        </div>
       </div>
     );
   }
